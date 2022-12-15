@@ -88,3 +88,33 @@ button h3 {
     display: flex;
     justify-content: center;
 }
+
+.container {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    height: 512px;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.465);
+    transition: opacity 0.4s ease-in-out;
+}
+
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+}
+
+.container:hover .overlay {
+    opacity: 0.8;
+}

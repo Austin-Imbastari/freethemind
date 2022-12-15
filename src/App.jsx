@@ -6,10 +6,11 @@ import "./App.css";
 function App() {
     const [prompt, setPrompt] = useState("");
     const [result, setResult] = useState([]);
+    // const [text, setText] = useState();
     // const [loading, setLoading] = useState(false);
 
     const configuration = new Configuration({
-        apiKey: "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",
+        apiKey: "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",
     });
     const openai = new OpenAIApi(configuration);
     const generateImage = async () => {
@@ -19,9 +20,12 @@ function App() {
             size: "512x512",
         });
         console.log(res.data.data[0].url);
-        setResult([...result, res.data.data[0].url]);
+        // setText(prompt);
+        setResult([...result, { img: res.data.data[0].url, title: prompt }]);
         // setLoading(!loading);
     };
+
+    // adding the promiot to specific images create an obkect with the prompt { img: result, textPrompt: text}
 
     return (
         <div className='App'>
@@ -49,10 +53,20 @@ function App() {
 
                 <div className='img-grid-container'>
                     {result.map((res) => {
+                        console.log(res);
                         return (
-                            <div className='img-container'>
-                                <img src={res} alt='' />
-                            </div>
+                            <>
+                                <div className='container'>
+                                    <div className='img-container'>
+                                        <img src={res.img} alt='' />
+                                    </div>
+                                    <div className='overlay'>
+                                        <div className='content'>
+                                            <p>{res.title}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
                         );
                     })}
                 </div>
