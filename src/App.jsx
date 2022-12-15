@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { Configuration, OpenAIApi } from "openai";
 import Loader from "./components/Loader";
 import "./App.css";
@@ -10,7 +11,7 @@ function App() {
     // const [loading, setLoading] = useState(false);
 
     const configuration = new Configuration({
-        apiKey: "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",
+        apiKey: "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",
     });
     const openai = new OpenAIApi(configuration);
     const generateImage = async () => {
@@ -19,13 +20,11 @@ function App() {
             n: 1,
             size: "512x512",
         });
-        console.log(res.data.data[0].url);
+        // console.log(res.data.data[0].url);
         // setText(prompt);
         setResult([...result, { img: res.data.data[0].url, title: prompt }]);
         // setLoading(!loading);
     };
-
-    // adding the promiot to specific images create an obkect with the prompt { img: result, textPrompt: text}
 
     return (
         <div className='App'>
@@ -53,20 +52,21 @@ function App() {
 
                 <div className='img-grid-container'>
                     {result.map((res) => {
-                        console.log(res);
                         return (
-                            <>
+                            <div key={uuidv4()}>
                                 <div className='container'>
                                     <div className='img-container'>
                                         <img src={res.img} alt='' />
                                     </div>
-                                    <div className='overlay'>
-                                        <div className='content'>
-                                            <p>{res.title}</p>
+                                    <a href={res.img} target='_blank'>
+                                        <div className='overlay'>
+                                            <div className='content'>
+                                                <p>{res.title}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
-                            </>
+                            </div>
                         );
                     })}
                 </div>
