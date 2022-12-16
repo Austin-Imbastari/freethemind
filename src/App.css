@@ -106,7 +106,7 @@ button h3 {
     opacity: 0;
     height: 512px;
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.465);
+    background-color: rgba(0, 0, 0, 0.86);
     transition: opacity 0.4s ease-in-out;
 }
 
