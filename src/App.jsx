@@ -8,12 +8,13 @@ function App() {
     const [prompt, setPrompt] = useState("");
     const [result, setResult] = useState([]);
     // const [text, setText] = useState();
-    // const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const configuration = new Configuration({
         apiKey: import.meta.env.VITE_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
     const generateImage = async () => {
+        setLoading(true);
         try {
             const res = await openai.createImage({
                 prompt: prompt,
@@ -23,7 +24,7 @@ function App() {
             // console.log(res.data.data[0].url);
             // setText(prompt);
             setResult([...result, { img: res.data.data[0].url, title: prompt }]);
-            // setLoading(!loading);
+            setLoading(false);
         } catch (e) {
             console.log(e);
             alert("Error,there was something wrong, please try again.");
@@ -49,8 +50,8 @@ function App() {
                             setPrompt(e.target.value);
                         }}
                     />
-                    <button onClick={generateImage}>
-                        <h3>CREATE</h3>
+                    <button onClick={generateImage} disabled={loading}>
+                        <h3>{loading ? "Loading..." : "CREATE"}</h3>
                     </button>
                 </div>
 
