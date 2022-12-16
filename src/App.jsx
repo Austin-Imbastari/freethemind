@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Configuration, OpenAIApi } from "openai";
-import Loader from "./components/Loader";
+
 import "./App.css";
 
 function App() {
@@ -9,21 +9,25 @@ function App() {
     const [result, setResult] = useState([]);
     // const [text, setText] = useState();
     // const [loading, setLoading] = useState(false);
-
     const configuration = new Configuration({
-        apiKey: "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",
+        apiKey: import.meta.env.VITE_API_KEY,
     });
     const openai = new OpenAIApi(configuration);
     const generateImage = async () => {
-        const res = await openai.createImage({
-            prompt: prompt,
-            n: 1,
-            size: "512x512",
-        });
-        // console.log(res.data.data[0].url);
-        // setText(prompt);
-        setResult([...result, { img: res.data.data[0].url, title: prompt }]);
-        // setLoading(!loading);
+        try {
+            const res = await openai.createImage({
+                prompt: prompt,
+                n: 1,
+                size: "512x512",
+            });
+            // console.log(res.data.data[0].url);
+            // setText(prompt);
+            setResult([...result, { img: res.data.data[0].url, title: prompt }]);
+            // setLoading(!loading);
+        } catch (e) {
+            console.log(e);
+            alert("Error,there was something wrong, please try again.");
+        }
     };
 
     return (
